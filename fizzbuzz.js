@@ -1,11 +1,18 @@
 const prompt = require("prompt-sync")();
+const { argv } = require('node:process');
 // This is our main function
 function fizzbuzz() {
+    // Take command line arguments to decide rules
+    let rules = [true, true, true, true, true, true];
+    if (argv.length > 2) {
+        // Rules are specified so check for them
+    }
     // Prompt the user for a maximum number
     let maxBoundInput = prompt("Insert a maximum number for FizzBuzz: ");
     let maxBound = 100;
     if (maxBoundInput.length > 0)
         maxBound = parseInt(maxBoundInput,10);
+    // Loop through numbers in range
     for (let i = 1; i <= maxBound; i++) {
         let output = [];
         // All multiples of 3 add Fizz
