@@ -1,6 +1,12 @@
+const prompt = require("prompt-sync")();
 // This is our main function
 function fizzbuzz() {
-    for (let i = 1; i <= 100; i++) {
+    // Prompt the user for a maximum number
+    let maxBoundInput = prompt("Insert a maximum number for FizzBuzz: ");
+    let maxBound = 100;
+    if (maxBoundInput.length > 0)
+        maxBound = parseInt(maxBoundInput,10);
+    for (let i = 1; i <= maxBound; i++) {
         let output = [];
         // All multiples of 3 add Fizz
         if (i % 3 === 0)
