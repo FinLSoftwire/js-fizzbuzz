@@ -50,7 +50,7 @@ function fizzbuzz() {
     // Take command line arguments to decide rules
     // Allow for either the number or word to be used as a command line argument
     // If no rules are specified, default to all
-    if (argv.length < 2 || argv[2] === "def") {
+    if (argv.length <= 2 || argv[2] === "def") {
         ruleMap.forEach(function(operation, integerKey, map) {ruleArray.push(integerKey);});
     }
     // Specify rules first, then after 'def' specify definitions in format NUM RULE WORD
