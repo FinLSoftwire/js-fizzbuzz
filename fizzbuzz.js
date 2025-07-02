@@ -1,6 +1,7 @@
 const prompt = require("prompt-sync")();
 const { argv } = require('node:process');
 
+// Contains a word and operation to perform
 class WordOp {
     constructor(word, op) {
         this.word = word;
@@ -38,24 +39,24 @@ function fizzbuzz() {
     ruleMap.set(11,new WordOp("Bong", outputWrite));
     ruleMap.set(13,new WordOp("Fezz", outputInsertB));
     ruleMap.set(17,new WordOp("", outputReverse));
-    let ruleSet = new Set();
-    let groupings = [["3","Fizz"],["5","Buzz"],["7","Bang"],["11","Bong"],["13","Fezz"],["17"]]
+    // Allowed arguments for toggling rules
+    let argumentKeywords = [["3","Fizz"],["5","Buzz"],["7","Bang"],["11","Bong"],["13","Fezz"],["17"]]
     const ruleIndices = new Map();
-    for (let index = 0; index < groupings.length; index++) {
-        groupings[index].forEach(function (value) {
-            ruleIndices.set(value, parseInt(groupings[index][0],10));
+    for (let index = 0; index < argumentKeywords.length; index++) {
+        argumentKeywords[index].forEach(function (value) {
+            ruleIndices.set(value, parseInt(argumentKeywords[index][0],10));
         });
     }
     // Take command line arguments to decide rules
     // Allow for either the number or word to be used as a command line argument
-    // Set non-specified rules to false
+    // If no rules are specified, default to all
+    if (argv.length < 2 || argv[2] === "def") {
+        ruleMap.forEach(function(operation, integerKey, map) {ruleArray.push(integerKey);});
+    }
     // Specify rules first, then after 'def' specify definitions in format NUM RULE WORD
     if (argv.length > 2) {
         let argIndex = 2;
         let definingNew = false;
-        if (argv[argIndex] === "def") {
-            ruleMap.forEach(function(operation, integerKey, map) {ruleArray.push(integerKey);});
-        }
         while (argIndex < argv.length) {
             let value = argv[argIndex];
             if (definingNew) {
@@ -67,8 +68,11 @@ function fizzbuzz() {
                     throw new Error("Rule already defined.");
                 let ruleType = argv[argIndex+1].toLowerCase();
                 let word = "";
-                if (ruleType !== "reverse")
+                if (ruleType !== "reverse") {
                     word = toCapitalized(argv[argIndex+2]);
+                    if (argIndex >= argv.length-2)
+                        throw new Error("Rule word not provided.");
+                }
                 let outputFunc = null;
                 switch (ruleType) {
                     case "reverse": outputFunc = outputReverse; argIndex += 2;
@@ -96,8 +100,6 @@ function fizzbuzz() {
                 argIndex++;
             }
         }
-    } else {
-        ruleMap.forEach(function(operation, integerKey, map) {ruleArray.push(integerKey);});
     }
     // Sort the rules in ascending order
     ruleArray.sort(function (a,b) {return a-b; });
