@@ -64,6 +64,8 @@ function fizzbuzz() {
                 if (argIndex >= argv.length-1)
                     throw new Error("Rule definition not provided.");
                 let integerValue = parseInt(value,10);
+                if (isNaN(integerValue))
+                    throw new Error("Expected an integer value, found " + value + ".");
                 if (ruleMap.has(integerValue))
                     throw new Error("Rule already defined.");
                 let ruleType = argv[argIndex+1].toLowerCase();
@@ -92,6 +94,7 @@ function fizzbuzz() {
                     argIndex++;
                     continue;
                 }
+                // Enable the specified rule if valid
                 const capitalizedValue = toCapitalized(value);
                 if (ruleIndices.has(capitalizedValue))
                     ruleArray.push(ruleIndices.get(capitalizedValue));
