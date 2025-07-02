@@ -1,5 +1,9 @@
 const prompt = require("prompt-sync")();
 const { argv } = require('node:process');
+
+function toCapitalized(string) {
+    return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
+}
 // This is our main function
 function fizzbuzz() {
     // Take command line arguments to decide rules
@@ -17,9 +21,10 @@ function fizzbuzz() {
     if (argv.length > 2) {
         argv.forEach(function(value, index) {
             // Ignore the first two arguments
-            if (index > 1 && ruleMap.has(value)) {
+            const capitalizedValue = toCapitalized(value);
+            if (index > 1 && ruleMap.has(capitalizedValue)) {
                 // If the argument is present, remove it from the false rule set
-                falseRuleSet.delete(ruleMap.get(value));
+                falseRuleSet.delete(ruleMap.get(capitalizedValue));
             }
         });
         falseRuleSet.forEach(function (ruleIndex) {
