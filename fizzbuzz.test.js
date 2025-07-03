@@ -32,6 +32,9 @@ describe('Inserts a word into the output before any word starting in B', () => {
     test('Returns ["Fezz","Fuzz","Fizz","Bang"] for inputs ["Fezz","Fuzz","Bang"], "Fizz"', () => {
         expect(outputInsertB(["Fezz","Fuzz","Bang"], "Fizz")).toEqual(["Fezz","Fuzz","Fizz","Bang"]);
     });
+    test('Returns ["Fizz"] for inputs [], "Fizz"', () => {
+        expect(outputInsertB(["Fizz"],"Fizz")).toEqual(["Fizz","Fizz"]);
+    });
 });
 describe('Runs FizzBuzz with specified command line arguments', () => {
     test('FizzBuzz should output 1 when given an endpoint >=1 with no command line arguments', () => {
@@ -68,5 +71,6 @@ describe('Runs FizzBuzz with specified command line arguments', () => {
     test('FizzBuzz should reverse output word order for multiples of 17 with no command line arguments', () => {
         expect(fizzbuzz([],255, 255)).toEqual("BuzzFizz");
         expect(fizzbuzz([],51, 51)).toEqual("Fizz");
+        expect(fizzbuzz([],17, 17)).toEqual("17");
     });
 });

@@ -10,7 +10,7 @@ const outputInsertB = function (arr, w) {
     } else {
         // Take first instance of an element prefixed with B and insert before
         let firstBPrefix = 0;
-        while (firstBPrefix < arr.length) {
+        while (firstBPrefix < arr.length - 1) {
             if (arr[++firstBPrefix][0] === "B")
                 break;
         }
