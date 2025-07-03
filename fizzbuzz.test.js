@@ -34,7 +34,9 @@ describe('Inserts a word into the output before any word starting in B', () => {
     });
 });
 describe('Runs FizzBuzz with specified command line arguments', () => {
-    test('Returns ["Fizz","Buzz"] for inputs ["Buzz"], "Fizz"', () => {
-        expect(fizzbuzz(["Buzz"],"Fizz")).toEqual(["Fizz","Buzz"]);
+    test('FizzBuzz should output 1 when given an endpoint >=1 with no command line arguments', () => {
+        const consoleSpy = jest.spyOn(console, 'log');
+        fizzbuzz([]);
+        expect(consoleSpy).toHaveBeenCalledWith("1");
     });
 });
