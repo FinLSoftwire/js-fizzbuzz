@@ -1,15 +1,6 @@
 const prompt = require("prompt-sync")();
 const { argv } = require('node:process');
-// Contains a word and operation to perform
-class OutputOperation {
-    constructor(word, op) {
-        this.word = word;
-        this.op = op;
-    }
-    runOp(arr) {
-        return this.op(arr, this.word);
-    }
-}
+const OutputOperation = require('./OutputOperation');
 const outputAppend = function (arr, w) { return arr.concat([w]); }
 const outputWrite = function (arr, w) { return [w]; }
 const outputReverse = function(arr, w) { return arr.reverse(); }
