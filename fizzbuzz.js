@@ -26,7 +26,7 @@ function toCapitalized(string) {
 }
 
 // This is our main function
-function fizzbuzz(inpArgs) {
+function fizzbuzz(inpArgs, startPoint, maxBound) {
     // Store an array of numbers that have a rule in use
     let ruleArray = [];
     const ruleMap = new Map();
@@ -103,11 +103,8 @@ function fizzbuzz(inpArgs) {
     }
     // Sort the rules in ascending order
     ruleArray.sort(function (a,b) {return a-b; });
-    let maxBoundInput = prompt("Insert a maximum number for FizzBuzz: ");
-    let maxBound = 100;
-    if (maxBoundInput.length > 0)
-        maxBound = parseInt(maxBoundInput,10);
-    for (let i = 1; i <= maxBound; i++) {
+    let outputLines = [];
+    for (let i = startPoint; i <= maxBound; i++) {
         let output = [];
         // If there is a rule for the number, then apply it to the output
         // Note that this means that any higher numbers may overwrite lower ones
@@ -119,13 +116,19 @@ function fizzbuzz(inpArgs) {
         if (output.length === 0)
             output = [i];
         // Concatenate all array elements into a single string
-        console.log(output.join(""));
+        outputLines.push(output.join(""));
     }
-
+    return outputLines.join("\n");
 }
 
+// Take max bound input to pass into fizzbuzz
+let maxBoundInput = prompt("Insert a maximum number for FizzBuzz: ");
+let maxBound = 100;
+if (maxBoundInput.length > 0)
+    maxBound = parseInt(maxBoundInput,10);
+
 // Now, we run the main function:
-fizzbuzz(argv.slice(2));
+console.log(fizzbuzz(argv.slice(2), 1, maxBound));
 
 module.exports = {
     outputAppend, outputWrite, outputReverse, outputInsertB, fizzbuzz
