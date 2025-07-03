@@ -1,8 +1,7 @@
 const prompt = require("prompt-sync")();
 const { argv } = require('node:process');
-
 // Contains a word and operation to perform
-class WordOp {
+class OutputOperation {
     constructor(word, op) {
         this.word = word;
         this.op = op;
@@ -18,9 +17,16 @@ const outputInsertB = function (arr, w) {
     if (arr.length === 0 || arr[0][0] === "B") {
         return [w].concat(arr);
     } else {
-        // Take tail of list and insert the word before it but after the head
+        // Take first instance of an element prefixed with B and insert before
+        let firstBPrefix = 0;
+        while (firstBPrefix < arr.length) {
+            if (arr[++firstBPrefix][0] === "B")
+                break;
+        }
         // (workaround for lack of insert)
-        return [arr[0], w].concat(arr.slice(1));
+        if (firstBPrefix < arr.length)
+            return arr.slice(0,firstBPrefix).concat([w]).concat(arr.slice(firstBPrefix));
+        return arr.concat([w]);
     }
 }
 
@@ -33,12 +39,12 @@ function fizzbuzz() {
     // Store an array of numbers that have a rule in use
     let ruleArray = [];
     const ruleMap = new Map();
-    ruleMap.set(3,new WordOp("Fizz", outputAppend));
-    ruleMap.set(5,new WordOp("Buzz", outputAppend));
-    ruleMap.set(7,new WordOp("Bang", outputAppend));
-    ruleMap.set(11,new WordOp("Bong", outputWrite));
-    ruleMap.set(13,new WordOp("Fezz", outputInsertB));
-    ruleMap.set(17,new WordOp("", outputReverse));
+    ruleMap.set(3,new OutputOperation("Fizz", outputAppend));
+    ruleMap.set(5,new OutputOperation("Buzz", outputAppend));
+    ruleMap.set(7,new OutputOperation("Bang", outputAppend));
+    ruleMap.set(11,new OutputOperation("Bong", outputWrite));
+    ruleMap.set(13,new OutputOperation("Fezz", outputInsertB));
+    ruleMap.set(17,new OutputOperation("", outputReverse));
     // Allowed arguments for toggling rules
     let argumentKeywords = [["3","Fizz"],["5","Buzz"],["7","Bang"],["11","Bong"],["13","Fezz"],["17"]]
     const ruleIndices = new Map();
@@ -85,7 +91,7 @@ function fizzbuzz() {
                         break;
                     case "insert": outputFunc = outputInsertB; argIndex += 3;
                 }
-                ruleMap.set(integerValue, new WordOp(word,outputFunc));
+                ruleMap.set(integerValue, new OutputOperation(word,outputFunc));
                 ruleArray.push(integerValue);
             } else {
                 // Toggle defining mode
@@ -130,3 +136,6 @@ function fizzbuzz() {
 // Now, we run the main function:
 fizzbuzz();
 
+module.exports = {
+    outputAppend, outputWrite, outputReverse, outputInsertB
+};
