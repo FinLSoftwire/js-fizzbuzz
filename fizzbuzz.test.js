@@ -65,4 +65,8 @@ describe('Runs FizzBuzz with specified command line arguments', () => {
         expect(fizzbuzz([],65, 65)).toEqual("FezzBuzz");
         expect(fizzbuzz([],195, 195)).toEqual("FizzFezzBuzz");
     });
+    test('FizzBuzz should reverse output word order for multiples of 17 with no command line arguments', () => {
+        expect(fizzbuzz([],255, 255)).toEqual("BuzzFizz");
+        expect(fizzbuzz([],51, 51)).toEqual("Fizz");
+    });
 });
