@@ -1,5 +1,5 @@
 const {describe} = require('node:test');
-const {outputAppend, outputWrite, outputReverse, outputInsertB} = require('./fizzbuzz');
+const {outputAppend, outputWrite, outputReverse, outputInsertB, fizzbuzz} = require('./fizzbuzz');
 // Testing
 describe('Appending to an output', () => {
     test('Returns ["a","b"] for inputs ["a"],"b"', () => {
@@ -31,5 +31,10 @@ describe('Inserts a word into the output before any word starting in B', () => {
     });
     test('Returns ["Fezz","Fuzz","Fizz","Bang"] for inputs ["Fezz","Fuzz","Bang"], "Fizz"', () => {
         expect(outputInsertB(["Fezz","Fuzz","Bang"], "Fizz")).toEqual(["Fezz","Fuzz","Fizz","Bang"]);
+    });
+});
+describe('Runs FizzBuzz with specified command line arguments', () => {
+    test('Returns ["Fizz","Buzz"] for inputs ["Buzz"], "Fizz"', () => {
+        expect(fizzbuzz(["Buzz"],"Fizz")).toEqual(["Fizz","Buzz"]);
     });
 });
